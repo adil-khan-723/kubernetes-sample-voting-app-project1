@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: voting-app-config
+data:
+  REDIS_HOST: redis
+  DB_HOST: db

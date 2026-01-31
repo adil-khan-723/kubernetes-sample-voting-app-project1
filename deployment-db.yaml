@@ -19,6 +19,11 @@ spec:
               value: postgres
             - name: POSTGRES_PASSWORD
               value: postgres
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: voting-app-config
+                  key: DB_HOST
           resources:
             requests:
               cpu: "100m"
