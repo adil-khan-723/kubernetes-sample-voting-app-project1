@@ -41,22 +41,27 @@ Key lessons:
 ## Architecture
 
 ```
-External Traffic
-      ↓
-Ingress Controller
-      ↓
-┌─────────────────────────────────────────┐
-│         Kubernetes Cluster              │
-│                                         │
-│  Voting Frontend ←→ Redis               │
-│                      ↕                  │
-│  Results Frontend ←→ PostgreSQL ←→ Worker │
-│                                         │
-└─────────────────────────────────────────┘
+                    External User
+                         |
+                         ↓
+                 Ingress Controller
+                         |
+        +----------------+----------------+
+        |                                 |
+        ↓                                 ↓
+  Voting Service                   Result Service
+        |                                 |
+        ↓                                 ↓
+  Voting Frontend                  Result Frontend
+        |                                 |
+        ↓                                 ↓
+      Redis                          PostgreSQL
+        |                                 |
+        +-------→ Worker Service ←--------+
 ```
 
-All internal communication uses ClusterIP Services.
-External access goes through Ingress with host-based routing.
+**Internal Communication:** All services use ClusterIP for internal traffic  
+**External Access:** Ingress with host-based routing (oggy.local)
 
 ## Kubernetes Objects Used
 
@@ -129,12 +134,12 @@ kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8080:80
 
 Add hostname to `/etc/hosts`:
 ```
-127.0.0.1 vote.local result.local
+127.0.0.1 oggy.local
 ```
 
 Access the application:
-- Voting: http://vote.local:8080
-- Results: http://result.local:8080
+- Voting: http://oggy.local:8080/vote
+- Results: http://oggy.local:8080/result
 
 ## What Broke and How I Fixed It
 
@@ -190,5 +195,4 @@ kubectl delete -f .
 
 ## Related
 
-Full writeup on dev.to: [https://dev.to/adil-khan-723/i-built-a-multi-service-kubernetes-app-and-heres-what-actually-broke-4f99]
-
+Full writeup on dev.to: [I Built a Multi-Service Kubernetes App and Here's What Actually Broke](https://dev.to/adil-khan-723/i-built-a-multi-service-kubernetes-app-and-heres-what-actually-broke-4f99)
