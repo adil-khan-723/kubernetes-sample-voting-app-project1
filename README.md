@@ -100,7 +100,7 @@ cd kubernetes-voting-app
 
 Deploy the application:
 ```bash
-kubectl apply -f k8s/
+kubectl apply -f .
 ```
 
 Verify all pods are running:
@@ -158,17 +158,16 @@ Access the application:
 
 ```
 .
-├── k8s/
-│   ├── voting-deployment.yaml
-│   ├── voting-service.yaml
-│   ├── result-deployment.yaml
-│   ├── result-service.yaml
-│   ├── redis-deployment.yaml
-│   ├── redis-service.yaml
-│   ├── postgres-deployment.yaml
-│   ├── postgres-service.yaml
-│   ├── worker-deployment.yaml
-│   └── ingress.yaml
+├── deployment-db.yaml
+├── deployment-redis.yaml
+├── deployment-result.yaml
+├── deployment-voting.yaml
+├── deployment-worker.yaml
+├── ingress-rules.yaml
+├── service-db.yaml
+├── service-redis.yaml
+├── service-result.yaml
+├── service-voting.yaml
 └── README.md
 ```
 
@@ -186,9 +185,10 @@ Once this mental model clicked, advanced Kubernetes topics started making sense.
 
 Remove all resources:
 ```bash
-kubectl delete -f k8s/
+kubectl delete -f .
 ```
 
 ## Related
 
-Full writeup on dev.to: []
+Full writeup on dev.to: [https://dev.to/adil-khan-723/i-built-a-multi-service-kubernetes-app-and-heres-what-actually-broke-4f99]
+
