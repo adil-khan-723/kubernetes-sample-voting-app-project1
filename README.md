@@ -25,7 +25,7 @@ This mirrors real microservices systems:
 - All communication happens via service discovery
 - External traffic enters through a single controlled entry point
 
-Kubernetes handles orchestration, self-healing, and networking.
+Kubernetes handles orchestration, self-healing, and networking..
 
 ## What I Learned
 
