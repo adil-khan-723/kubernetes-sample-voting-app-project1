@@ -134,12 +134,13 @@ kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8080:80
 
 Add hostname to `/etc/hosts`:
 ```
-127.0.0.1 oggy.local
+127.0.0.1 vote.oggy.local
+127.0.0.1 result.oggy.local
 ```
 
 Access the application:
-- Voting: http://oggy.local:8080/vote
-- Results: http://oggy.local:8080/result
+- Voting: http://vote.oggy.local:8080
+- Results: http://result.oggy.local:8080
 
 ## What Broke and How I Fixed It
 
