@@ -164,6 +164,9 @@ Access the application:
 
 ```
 .
+├── README.md
+├── app-config.yaml
+├── app-secrets.yaml
 ├── deployment-db.yaml
 ├── deployment-redis.yaml
 ├── deployment-result.yaml
@@ -173,8 +176,7 @@ Access the application:
 ├── service-db.yaml
 ├── service-redis.yaml
 ├── service-result.yaml
-├── service-voting.yaml
-└── README.md
+└── service-voting.yaml
 ```
 
 ## Key Takeaways
