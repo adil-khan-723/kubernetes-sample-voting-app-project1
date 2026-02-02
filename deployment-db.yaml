@@ -9,27 +9,26 @@ spec:
         app: db
     
     spec:
+      initContainers:
+        - name: db-init
+          image: busybox
+          command:
+            - sh
+            - -c 
+            - |
+              echo "export POSTGRES_USER=$(cat /secrets/DB_USER)" > /work/env
+              echo "export POSTGRES_PASSWORD=$(cat /secrets/DB_PASSWORD)" >> /work/env
+          volumeMounts:
+            - mountPath: /work
+              name: work-volume
+            - mountPath: /secrets
+              name: secrets-volume
       containers:
         - name: db
           image: postgres:15-alpine
           ports:
             - containerPort: 5432
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: DB_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: DB_PASSWORD
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: voting-app-config
-                  key: DB_HOST
+          command: ["sh", "-c", ". /work/env && docker-entrypoint.sh postgres"]
           resources:
             requests:
               cpu: "100m"
@@ -37,7 +36,15 @@ spec:
             limits:
               cpu: "500m"
               memory: "500Mi"
-
+          volumeMounts:
+            - mountPath: /work 
+              name: work-volume
+      volumes:
+        - name: secrets-volume
+          secret:
+            secretName: db-secret
+        - name: work-volume
+          emptyDir: {}
   replicas: 1
   selector:
     matchLabels:
